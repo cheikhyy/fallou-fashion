@@ -274,7 +274,134 @@ footer p{font-size:0.78rem;color:var(--texte-tres-clair);}
   .gold-circles span{width:5px;height:5px;}
 }
 
+/* MODALE GALERIE */
+.modale-galerie {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+}
 
+.modale-galerie.active {
+    display: flex;
+}
+
+.modale-contenu {
+    max-width: 500px;
+    width: 100%;
+    background: var(--noir2);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--or);
+}
+
+.modale-header {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--gris);
+}
+
+.modale-header h3 {
+    color: var(--or);
+    font-size: 1.2rem;
+}
+
+.modale-fermer {
+    background: none;
+    border: none;
+    color: var(--or);
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+}
+
+.modale-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 0.5rem;
+}
+
+.image-galerie {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.image-galerie img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.image-galerie img:hover {
+    transform: scale(1.05);
+}
+
+.modale-footer {
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid var(--gris);
+}
+
+/* MODALE PLEIN ÉCRAN */
+.modale-full {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.98);
+    z-index: 10001;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.modale-full.active {
+    display: flex;
+}
+
+.modale-full img {
+    max-width: 90%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 16px;
+}
+
+.modale-full button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--or);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.wa-galerie-btn {
+    background: var(--or);
+    color: var(--noir);
+    padding: 0.7rem 1.2rem;
+    border-radius: 40px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
 
 </style>
 </head>
@@ -479,7 +606,7 @@ footer p{font-size:0.78rem;color:var(--texte-tres-clair);}
     <!-- Tenue Homme -->
     <div class="cat-card" >
       <div class="cat-img-wrapper">
-        <img src="./images/ensemble homme1.png" alt="Tenue Homme">
+        <img src="./images/tenue-homme-1.png" alt="Tenue Homme">
         <div class="cat-img-overlay"></div>
       </div>
       <div class="cat-content" >
@@ -510,6 +637,30 @@ footer p{font-size:0.78rem;color:var(--texte-tres-clair);}
   </div>
 </section>
 
+
+<!-- MODALE GALERIE -->
+<div id="modaleGalerie" class="modale-galerie">
+    <div class="modale-contenu">
+        <div class="modale-header">
+            <h3 id="galerieTitre">Collection</h3>
+            <button class="modale-fermer" onclick="fermerGalerie()">✕</button>
+        </div>
+        <div class="modale-images" id="galerieImages">
+            <!-- Les images seront insérées ici -->
+        </div>
+        <div class="modale-footer">
+            <a href="#" id="galerieWaBtn" target="_blank" class="wa-galerie-btn">
+                <i class="fab fa-whatsapp"></i> Commander via WhatsApp
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- MODALE PLEIN ÉCRAN -->
+<div id="modaleFull" class="modale-full" onclick="fermerFull()">
+    <button onclick="fermerFull()">✕</button>
+    <img id="fullImage" src="" alt="">
+</div>
 <!-- GALERIE VIDÉO -->
 <section id="galerie-video" style="padding:6rem 6%;">
   <span class="section-label">✦ Nos créations en vidéo</span>
@@ -670,10 +821,10 @@ const videos = [
   { id:"eaGUf91fGhU", cat:"tay-bass", nom:"Tay Bass" },
   { id:"IKea9xwwmQ0", cat:"tay-bass", nom:"Tay Bass" },
   { id:"6yIF_R57o50", cat:"tay-bass", nom:"Tay Bass" },
-  { id:"XeeSjx_iFE0", cat:"costume", nom:"Costume Africain" },
+  { id:"oXYShs_U1S0", cat:"costume", nom:"Costume Africain" },
   { id:"lcp3dkaagD4", cat:"costume", nom:"Costume Africain" },
   { id:"bQb7inVvT1E", cat:"costume", nom:"Costume Africain" },
-  { id:"ELQ2i1lI3yA", cat:"costume", nom:"Costume Africain" },
+  { id:"XeeSjx_iFE0", cat:"costume", nom:"Costume Africain" },
   { id:"Zo0YDwcU50g", cat:"robe", nom:"Robe" },
   { id:"D1g7XLuljv4", cat:"robe", nom:"Robe" },
   { id:"DH-oCYInaTA", cat:"robe", nom:"Robe" },
@@ -681,7 +832,7 @@ const videos = [
   { id:"tcCQcqEVoOE", cat:"mariage", nom:"Robe Mariage" },
   { id:"1gPbITYSMXU", cat:"mariage", nom:"Robe Mariage" },
   { id:"tAqw0hXyZHo", cat:"mariage", nom:"Robe Mariage" },
-  { id:"VRaPaqTUqrU", cat:"mariage", nom:"Robe Mariage" },
+  { id:"iSQlPbt3Y8E", cat:"mariage", nom:"Robe Mariage" },
   { id:"rdx3s179GbU", cat:"homme", nom:"Tenue Homme" },
   { id:"Jaq4btUIooM", cat:"homme", nom:"Tenue Homme" },
   { id:"uLnEun_8rrA", cat:"homme", nom:"Tenue Homme" },
@@ -743,6 +894,128 @@ function ouvrirModal(id, nom) {
   modal.classList.add('actif');
   document.body.style.overflow = 'hidden';
 }
+// ===== GALERIES D'IMAGES PAR COLLECTION =====
+const galeries = {
+    costumeafricain: {
+        titre: "Costume Africain",
+        images: [
+            "images/costume-africain-1.png",
+            "images/costume-africain-2.png",
+            "images/costume-africain-3.png",
+            "images/costume-africain-4.png"
+        ],
+        message: "Bonjour, je suis intéressé(e) par un Costume Africain. Pouvez-vous me montrer plus de modèles ?"
+    },
+    taybass: {
+        titre: "Tay Bass",
+        images: [
+            "images/tay-bass-1.png",
+            "images/tay-bass-2.png",
+            "images/tay-bass-3.png",
+            "images/tay-bass-4.png"
+        ],
+        message: "Bonjour, je suis intéressé(e) par un Tay Bass. Pouvez-vous me montrer plus de modèles ?"
+    },
+    mariage: {
+        titre: "Robe de Mariage",
+        images: [
+            "images/Robe-mariage-1.png",
+            "images/Robe-mariage-2.png",
+            "images/Robe-mariage-3.png",
+            "images/Robe-mariage-4.png"
+        ],
+        message: "Bonjour, je suis intéressé(e) par une Robe de Mariage. Pouvez-vous me montrer plus de modèles ?"
+    },
+    robe: {
+        titre: "Robes",
+        images: [
+            "images/Robe-1.png",
+            "images/Robe-2.png",
+            "images/Robe-3.png",
+            "images/Robe-4.png"
+        ],
+        message: "Bonjour, je suis intéressé(e) par une Robe. Pouvez-vous me montrer plus de modèles ?"
+    },
+    homme: {
+        titre: "Tenue Homme",
+        images: [
+            "images/tenue-homme-1.png",
+            "images/tenue-homme-2.png",
+            "images/tenue-homme-3.png",
+            "images/tenue-homme-4.png"
+        ],
+        message: "Bonjour, je suis intéressé(e) par une Tenue Homme. Pouvez-vous me montrer plus de modèles ?"
+    },
+    femme: {
+        titre: "Tenue Femme",
+        images: [
+            "images/tenue-femme-1.png",
+            "images/tenue-femme-2.png",
+            "images/tenue-femme-3.png",
+            "images/tenue-femme-4.jpg"
+        ],
+        message: "Bonjour, je suis intéressé(e) par une Tenue Femme. Pouvez-vous me montrer plus de modèles ?"
+    }
+};
+
+// Ouvrir la galerie
+function ouvrirGalerie(categorie) {
+    const galerie = galeries[categorie];
+    if (!galerie) return;
+    
+    const modal = document.getElementById('modaleGalerie');
+    document.getElementById('galerieTitre').textContent = galerie.titre;
+    document.getElementById('galerieWaBtn').href = `https://wa.me/221770244765?text=${encodeURIComponent(galerie.message)}`;
+    
+    const container = document.getElementById('galerieImages');
+    container.innerHTML = '';
+    
+    galerie.images.forEach(img => {
+        const div = document.createElement('div');
+        div.className = 'image-galerie';
+        div.onclick = () => ouvrirFull(img);
+        div.innerHTML = `<img src="${img}" alt="${galerie.titre}" loading="lazy" onerror="this.src='images/fallback.jpg'">`;
+        container.appendChild(div);
+    });
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Fermer la galerie
+function fermerGalerie() {
+    document.getElementById('modaleGalerie').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Ouvrir image en plein écran
+function ouvrirFull(src) {
+    document.getElementById('fullImage').src = src;
+    document.getElementById('modaleFull').classList.add('active');
+}
+
+// Fermer plein écran
+function fermerFull() {
+    document.getElementById('modaleFull').classList.remove('active');
+}
+
+// Lier les boutons "Voir plus" aux catégories
+document.querySelectorAll('.cat-wa-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        let categorie = '';
+        
+        if (href === '#costumeafricain') categorie = 'costumeafricain';
+        else if (href === '#taybass') categorie = 'taybass';
+        else if (href === '#mariage') categorie = 'mariage';
+        else if (href === '#robe') categorie = 'robe';
+        else if (href === '#homme') categorie = 'homme';
+        else if (href === '#femme') categorie = 'femme';
+        
+        if (categorie) ouvrirGalerie(categorie);
+    });
+});
 
 function fermerModalVideo() {
   const iframe = document.getElementById('modalIframe');
